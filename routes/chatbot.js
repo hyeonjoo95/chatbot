@@ -23,7 +23,6 @@ router.get('/skill/start', (req, res) => {
     });
 
     const result = {
-      message: 'success',
       welcome_talk: rows[0][0].contents,
       card_list: card_list
     };
@@ -42,8 +41,7 @@ router.get('/card/pick/:card_id', (req, res) => {
   db.query('SELECT * from card_data where id=?', params.card_id, (error, rows) => {
     if (error) throw error;
     
-    const result = {
-      message: 'success',
+    const result = { 
       id: rows[0].id,
       title: rows[0].title,
       commentary: rows[0].commentary

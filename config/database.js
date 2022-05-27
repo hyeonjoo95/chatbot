@@ -15,8 +15,6 @@ const mysqlConnection = {
         con.connect(err => {
             if(err) {
                 console.log("MySQL 연결 실패 : ", err);
-            } else {
-                //console.log("MySQL Connected!!!");
             }
         });
     },
@@ -24,8 +22,6 @@ const mysqlConnection = {
         con.end(err => {
             if(err) {
                 console.log("MySQL 종료 실패 : ", err);
-            } else {
-                //console.log("MySQL Terminated...");
             }
         })
     }
