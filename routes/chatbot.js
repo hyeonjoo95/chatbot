@@ -17,14 +17,24 @@ router.get('/skill/start', (req, res) => {
 
   db.query(sql,  (error, rows) => {
     if (error) throw error;
+
+    if (!rows[0].length) {
+        res.status(400);
+        throw new Error("welcome talk not exist");
+    }
+
+    if (!rows[1].length) {
+        res.status(400);
+        throw new Error("card data not exist");
+    }
     
     rows[1].forEach(element => {
-      card_list.push(element.id);
+        card_list.push(element.id);
     });
 
     const result = {
-      welcome_talk: rows[0][0].contents,
-      card_list: card_list
+        elcome_talk: rows[0][0].contents,
+        card_list: card_list
     };
 
     res.send(result);
@@ -40,11 +50,16 @@ router.get('/card/pick/:card_id', (req, res) => {
   
   db.query('SELECT * from card_data where id=?', params.card_id, (error, rows) => {
     if (error) throw error;
+
+    if (!rows.length) {
+        res.status(400);
+        res.send({error: 'card data not exist'});
+    }
     
     const result = { 
-      id: rows[0].id,
-      title: rows[0].title,
-      commentary: rows[0].commentary
+        id: rows[0].id,
+        title: rows[0].title,
+        commentary: rows[0].commentary
     };
 
     res.send(result);
